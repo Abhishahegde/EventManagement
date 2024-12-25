@@ -446,7 +446,7 @@ def contact():
         # Create the email content
         msg = Message(
             subject="New Contact Us Message",
-            recipients=["nnm22cs007@nmamit.in"],  # The recipient's email address
+            recipients=["email"],  # The recipient's email address
             body=f"Name: {name}\nEmail: {email}\nMessage: {message}"
         )
 
