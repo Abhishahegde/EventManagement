@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Event</title>
+    <style>
+        /* General Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff; /* Light background */
+            color: #2e3b4e; /* Darker text for contrast */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 30px;
+        }
+
+        /* Header Styling */
+        h1 {
+            font-size: 36px;
+            color: #f14e7e; /* Light accent color */
+            text-align: center;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        /* Form Styling */
+        form {
+            background-color: #ffffff; /* Light background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Label Styling */
+        label {
+            font-size: 18px;
+            color: #2e3b4e; /* Soft text color */
+            margin-bottom: 10px;
+        }
+
+        /* Input Fields Styling */
+        input[type="number"], select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #f14e7e;
+            border-radius: 5px;
+            background-color: #f7f7f7; /* Light input background */
+            color: #333; /* Dark text for input fields */
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: #f14e7e; /* Accent color */
+        }
+
+        /* Button Styling */
+        button {
+            padding: 10px;
+            font-size: 18px;
+            background-color: #f14e7e; /* Accent button color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e23a6c;
+        }
+
+        /* Link Styling */
+        a {
+            color: #f14e7e;
+            text-decoration: none;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Paragraph Styling */
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        /* Summary Section Styling */
+        .summary {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ffffff; /* Light background for the summary */
+            color: #333; /* Darker text for the summary */
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            text-align: left;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .summary h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .summary p {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Register for {{ event[0] }}</h1> <!-- Event name -->
+
+    <form method="POST">
+        <p><strong>Date:</strong> {{ event[1] }}</p> <!-- Event date -->
+        <p><strong>Venue:</strong> {{ event[2] }}</p> <!-- Event venue -->
+        <p><strong>Price per Ticket:</strong> ${{ event[3] }}</p> <!-- Event price -->
+
+        <label for="tickets">Number of Tickets:</label>
+        <input type="number" id="tickets" name="tickets" min="1" required>
+
+        <label for="payment_method">Payment Method:</label>
+        <select id="payment_method" name="payment_method" required>
+            <option value="credit_card">Credit Card</option>
+            <option value="paypal">PayPal</option>
+            <option value="cash">Cash</option>
+        </select>
+
+        <button type="submit">Confirm Booking</button>
+    </form>
+
+    <!-- Summary Section -->
+    {% if registered %}
+    <div class="summary">
+        <h2>Event Summary</h2>
+        <p><strong>Event:</strong> {{ event[0] }}</p>
+        <p><strong>Date:</strong> {{ event[1] }}</p>
+        <p><strong>Venue:</strong> {{ event[2] }}</p>
+        <p><strong>Tickets:</strong> {{ tickets }}</p>
+        <p><strong>Payment Method:</strong> {{ payment_method }}</p>
+        <p><strong>Total Cost:</strong> ${{ tickets * event[3] }}</p>
+    </div>
+    {% endif %}
+
+
+<a href="{{ url_for('user_dashboard') }}" class="back-btn">Back to Home</a>
+
+</body>
+</html>

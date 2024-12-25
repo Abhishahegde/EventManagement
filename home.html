@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+    /* Import Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;600&display=swap');
+
+    /* General Body Styling */
+    body {
+        background-color: #f7f9fc; /* Light neutral background */
+        font-family: 'Montserrat', sans-serif; /* Modern sans-serif font */
+        margin: 0;
+        padding: 0;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 30px;
+        overflow: auto; /* Allow scrolling */
+        min-height: 100vh; /* Ensure full-height body */
+    }
+
+    /* Main Heading Styling */
+    h1 {
+        color: #2c3e50; /* Dark blue for headings */
+        font-size: 40px;
+        margin-bottom: 20px;
+        font-family: 'Playfair Display', serif; /* Elegant serif font for main title */
+        text-align: center;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Notification Bell Button */
+    .notification-bell {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        font-size: 30px;
+        color: #555;
+        cursor: pointer;
+        z-index: 10;
+        transition: color 0.3s ease;
+    }
+
+    .notification-bell:hover {
+        color: #3498db; /* Accent blue color on hover */
+    }
+
+    /* Notification Dropdown */
+    .notification-dropdown {
+        position: fixed;
+        top: 60px;
+        right: 20px;
+        background-color: #fff;
+        color: #333;
+        width: 280px;
+        max-height: 400px;
+        overflow-y: auto;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        display: none;
+        padding: 15px;
+        transition: all 0.3s ease;
+    }
+
+    .notification-dropdown ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .notification-dropdown li {
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .notification-dropdown li a {
+        color: #3498db;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .notification-dropdown li a:hover {
+        text-decoration: underline;
+    }
+
+    /* Event Container Styling */
+    .events-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 40px;
+        padding: 0 10px;
+    }
+
+    /* Event Card Styling */
+    .event-card {
+        width: 300px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        cursor: pointer;
+        overflow: hidden;
+    }
+
+    /* Hover Effect for Event Card */
+    .event-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        background-color: #f1fcfe; /* Light blue background on hover */
+    }
+
+    /* Event Details Styling */
+    .event-details {
+        padding: 20px;
+        color: #333;
+    }
+
+    .event-details h2 {
+        font-size: 22px;
+        color: #3498db; /* Accent blue for event titles */
+        margin-bottom: 10px;
+        font-family: 'Playfair Display', serif;
+        font-weight: bold;
+    }
+
+    .event-details p {
+        font-size: 16px;
+        color: #555;
+        margin-bottom: 15px;
+    }
+
+    .register-btn {
+        display: inline-block;
+        background-color: #3498db;
+        color: white;
+        padding: 12px 25px;
+        border-radius: 25px;
+        font-size: 16px;
+        text-decoration: none;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .register-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+    }
+
+    /* Logout Button Styling */
+    .logout-btn {
+        display: inline-block;
+        background-color: #e74c3c;
+        color: white;
+        padding: 12px 25px;
+        border-radius: 25px;
+        margin-top: 30px;
+        font-size: 16px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .logout-btn:hover {
+        background-color: #c0392b;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+        .events-container {
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .event-card {
+            width: 90%;
+        }
+
+        .event-details h2 {
+            font-size: 20px;
+        }
+    }
+        /* Back Button Styling */
+.back-btn {
+    display: inline-block;
+    background-color: #2c3e50; /* Dark color for button background */
+    color: white;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s ease;
+    margin-top: 20px; /* Space it a bit from the elements above */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+/* Hover Effect for Back Button */
+.back-btn:hover {
+    background-color: #3498db; /* Light blue on hover */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+    transform: translateY(-3px); /* Slightly lift the button */
+}
+
+/* Active Effect */
+.back-btn:active {
+    background-color: #2980b9; /* Darker blue when clicked */
+    transform: translateY(0); /* Button returns to normal position */
+}
+
+
+    </style>
+</head>
+<body>
+    <h1>"Your Ticket to Effortless Event Registration"</h1>
+<a href="{{ url_for('user_dashboard') }}" class="back-btn">Back to Home</a>
+
+    <!-- Display Events -->
+    <div class="events-container">
+        {% for event in events %}
+            <div class="event-card">
+                <div class="event-details">
+                    <h2>{{ event[0] }}</h2>
+                    <p>{{ event[1] }}</p>
+                    <p>{{ event[2] }}</p>
+                    <a href="{{ url_for('register_event', event_id=loop.index) }}" class="register-btn">Register</a>
+                </div>
+            </div>
+        {% else %}
+            <p>No events found.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Logout Button -->
+    <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+
+    <!-- Notification Bell Button -->
+    <div class="notification-bell" onclick="toggleNotifications()">🔔</div>
+
+   <!-- Notification Dropdown -->
+    <div class="notification-dropdown" id="notificationDropdown">
+        <ul>
+            {% for notification in notifications %}
+                <li class="notification-item">
+                    <div class="notification-box">
+                        <a href="#">{{ notification[0] }} - {{ notification[1] }}</a>
+                    </div>
+                </li>
+            {% else %}
+                <li>No new notifications</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script>
+        // Toggle notification dropdown visibility
+        function toggleNotifications() {
+            var notificationDropdown = document.getElementById('notificationDropdown');
+            notificationDropdown.style.display = (notificationDropdown.style.display === 'none' || notificationDropdown.style.display === '') ? 'block' : 'none';
+        }
+    </script>
+
+</body>
+</html>

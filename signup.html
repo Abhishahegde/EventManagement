@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Page</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            width: 80%;
+            max-width: 1000px;
+            padding: 20px;
+        }
+
+        .form-container {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 400px;
+        }
+
+        h2 {
+            font-size: 32px;
+            color: #f14e7e;
+            margin-bottom: 20px;
+        }
+
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="date"],
+        select {
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+            color: #333;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="email"]:focus,
+        input[type="date"]:focus,
+        select:focus {
+            border-color: #f14e7e;
+            outline: none;
+        }
+
+        button {
+            padding: 12px;
+            font-size: 18px;
+            background-color: #f14e7e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #e23a6c;
+        }
+
+        a {
+            color: #f14e7e;
+            text-decoration: none;
+            margin-top: 15px;
+            font-size: 16px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .image-container {
+            flex: 1;
+            padding-left: 20px;
+        }
+
+        .image-container img {
+            width: 100%;
+            max-width: 450px;
+            border-radius: 10px;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="form-container">
+            <h2>Sign Up</h2>
+            <form id="signupForm" method="POST" action="/signup">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" >
+                <div id="usernameError" class="error-message"></div>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <div id="passwordError" class="error-message"></div>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <div id="emailError" class="error-message"></div>
+
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" >
+                <div id="dobError" class="error-message"></div>
+
+                <button type="submit">Sign Up</button>
+            </form>
+            <a href="/login">Already have an account? Login here</a>
+        </div>
+
+        <div class="image-container">
+            <img src="static/images/person.jpg" alt="Person Image">
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Clear previous error messages
+            const usernameError = document.getElementById('usernameError');
+            const passwordError = document.getElementById('passwordError');
+            const emailError = document.getElementById('emailError');
+            const dobError = document.getElementById('dobError');
+            usernameError.style.display = 'none';
+            passwordError.style.display = 'none';
+            emailError.style.display = 'none';
+            dobError.style.display = 'none';
+
+            // Get input values
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const dob = document.getElementById('dob').value.trim();
+
+            let isValid = true;
+
+            // Validate username
+            if (username === '') {
+                usernameError.textContent = 'Username is required.';
+                usernameError.style.display = 'block';
+                isValid = false;
+            }
+
+            // Validate password
+            if (password.length <= 4) {
+                passwordError.textContent = 'Password must be more than 4 characters.';
+                passwordError.style.display = 'block';
+                isValid = false;
+            }
+
+            // Validate email
+            if (!email.includes('@')) {
+                emailError.textContent = 'Please enter a valid email address.';
+                emailError.style.display = 'block';
+                isValid = false;
+            }
+
+            // Validate Date of Birth
+             if (dob === '') {
+            dobError.textContent = 'Please select your date of birth.';
+            dobError.style.display = 'block';
+            isValid = false;
+        } else {
+            const birthDate = new Date(dob);
+            const today = new Date();
+            const age = today.getFullYear() - birthDate.getFullYear();
+            const monthDifference = today.getMonth() - birthDate.getMonth();
+
+            // Adjust for birthdate not yet reached this year
+            if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            if (age < 16) {
+                dobError.textContent = 'You must be at least 16 years old.';
+                dobError.style.display = 'block';
+                isValid = false;
+            }
+        }
+
+            // If all fields are valid, submit the form
+            if (isValid) {
+                alert('Sign Up successful!');
+                this.submit();
+            }
+        });
+    </script>
+
+</body>
+</html>

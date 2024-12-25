@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management - BookMyShow Style</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        /* Navbar */
+        nav {
+            background-color: #242424;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        nav ul li a:hover {
+            color: #f14e7e;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #222; /* Darker font for better visibility */
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .hero .slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            display: flex;
+        }
+
+        .hero .slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero .search-bar {
+            display: flex;
+            width: 80%;
+            max-width: 600px;
+            background: #fff;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+.hero h1, .hero p {
+    font-family: 'Comic Sans MS', cursive, sans-serif; /* Cute font */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Adds a shadow to make text stand out */
+    color: #fff; /* White text for visibility */
+    font-weight: bold; /* Make the font bold for emphasis */
+    letter-spacing: 1px; /* Add spacing for a cleaner look */
+}
+
+.hero p {
+    font-size: 18px; /* Adjusted font size for paragraph */
+    line-height: 1.6; /* Increased line height for readability */
+    margin-top: 10px;
+}
+
+        .hero input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .hero button {
+            background-color: #f14e7e;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .hero button:hover {
+            background-color: #e23a6c;
+        }
+
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            margin: 40px 0 20px;
+            font-size: 28px;
+            color: #333;
+        }
+
+        /* Cards */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .card-text {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .card button {
+            background-color: #f14e7e;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .card button:hover {
+            background-color: #e23a6c;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #242424;
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 30px;
+        }
+
+        .search-bar input {
+            padding: 10px;
+            width: 100%;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+        }
+        /* Contact Section */
+#contact {
+    padding: 40px 20px;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+.contact-details {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.contact-details ul {
+    list-style: none;
+    padding: 0;
+}
+
+.contact-details li {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.contact-details a {
+    color: #f14e7e;
+    text-decoration: none;
+}
+
+.contact-details a:hover {
+    text-decoration: underline;
+}
+
+.contact-form {
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.contact-form label {
+    font-size: 16px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.contact-form input, .contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.contact-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #f14e7e;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.contact-form button:hover {
+    background-color: #e23a6c;
+}
+
+    </style>
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#events">Recommended Events</a></li>
+        <li><a href="#venues">Venues</a></li>
+        <li><a href="#services">Services Provided</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+    </ul>
+</nav>
+
+<section class="hero" id="hero">
+    <div class="slider">
+        <img src="static/images/event3.jpg" alt="Slide 1">
+        <img src="static/images/event2.jpg" alt="Slide 2">
+        <img src="static/images/hero.jpg" alt="Slide 3">
+        <img src="static/images/event4.jpg" alt="Slide 4">
+        <img src="static/images/event5.jpg" alt="Slide 5">
+        <img src="static/images/event1.jpg" alt="Slide 6">
+    </div>
+    <h1>Welcome to Event Portal</h1>
+    <p>Discover and book the best events and venues</p>
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search for events or venues">
+        <p id="quote" style="margin-top: 20px; font-size: 20px; color: #444; font-family: 'Arial', sans-serif; font-weight: bold; text-align: center; letter-spacing: 1px; line-height: 1.5; text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);">"The best way to predict the future is to create it." - Abraham Lincoln</p>
+    </div>
+</section>
+
+<section id="events">
+    <h2 class="section-title">Recommended or Upcoming Events</h2>
+    <div class="card-container">
+        <div class="card">
+            <img src="static\images\p1.jpg" alt="Event 1">
+            <div class="card-content">
+                <h3 class="card-title">Music Concert</h3>
+                <p class="card-text">Date: 25th Dec 2024</p>
+                <button onclick="window.location.href='{{url_for('login')}}'">Book Now</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="static\images\p2.jpg" alt="Event 2">
+            <div class="card-content">
+                <h3 class="card-title">Tech Conference</h3>
+                <p class="card-text">Date: 5th Jan 2025</p>
+                <button onclick="window.location.href='{{url_for('login')}}'">Book Now</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="static\images\p3.jpg" alt="Event 3">
+            <div class="card-content">
+                <h3 class="card-title">Art Workshop</h3>
+                <p class="card-text">Date: 10th Jan 2025</p>
+                <button onclick="window.location.href='{{url_for('login')}}'">Book Now</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="venues">
+    <h2 class="section-title">Available Venues</h2>
+    <div class="card-container">
+        <div class="card">
+            <img src="static\images\v1.jpg" alt="Venue 1">
+            <div class="card-content">
+                <h3 class="card-title">Grand Hall</h3>
+                <p class="card-text">Location: Downtown</p>
+                <button onclick="window.location.href='{{url_for('login')}}'">Book Venue</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="static\images\v2.jpg" alt="Venue 2">
+            <div class="card-content">
+                <h3 class="card-title">Rooftop Space</h3>
+                <p class="card-text">Location: City Center</p>
+                <button onclick="window.location.href='{{url_for('login')}}'">Book Venue</button>
+            </div>
+        </div>
+        <div class="card">
+            <img src="static\images\v3.jpg" alt="Venue 3">
+            <div class="card-content">
+                <h3 class="card-title">Open Garden</h3>
+                <p class="card-text">Location: Suburbs</p>
+                <button onclick="window.location.href='{{url_for('login')}}'">Book Venue</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="services">
+    <h2 class="section-title">Services Provided</h2>
+    <div class="card-container">
+        <div class="card">
+            <img src="static\images\a1.jpg" alt="Service 1">
+            <div class="card-content">
+                <h3 class="card-title">Event Planning</h3>
+                <p class="card-text">Our experts assist in organizing every detail of your event.</p>
+                <button onclick="window.location.href='{{url_for('login')}}'">More Info</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="static\images\a2.jpg" alt="Service 3">
+            <div class="card-content">
+                <h3 class="card-title">Event Management</h3>
+                <p class="card-text">Full-scale event management services for seamless execution.</p>
+                <button onclick="window.location.href='{{url_for('login')}}'">More Info</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <h2 class="section-title">Contact Us</h2>
+    <div class="contact-details">
+        <p>If you have any questions or need assistance, feel free to reach out to us. We're here to help!</p>
+        <ul>
+            <li><strong>Email:</strong> <a href="mailto:support@eventportal.com">support@eventportal.com</a></li>
+            <li><strong>Phone:</strong> 9900133645</li>
+            <li><strong>Location:</strong> ForeverYoung Events, Banglore, Karnataka</li>
+        </ul>
+    </div>
+
+    <div class="contact-form">
+        <h3>Send us a message</h3>
+        <form action="/" method="post">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Your Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Your Message</label>
+            <textarea id="message" name="message" required></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</section>
+
+
+<footer>
+    <p>&copy; 2024 Event Portal. All Rights Reserved.</p>
+</footer>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.hero .slider img');
+
+    function showNextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+    }
+
+    setInterval(showNextSlide, 5000); // Change slide every 5 seconds
+</script>
+
+</body>
+</html>
