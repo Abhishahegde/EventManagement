@@ -14,8 +14,8 @@ def get_db_connection():
     connection = mysql.connector.connect(
         host='localhost',
         database='event_Project',
-        user='root',  # Update with your MySQL username
-        password='root123'  # Update with your MySQL password
+        user='user',  # Update with your MySQL username
+        password='password'  # Update with your MySQL password
     )
     return connection
 
@@ -25,9 +25,9 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
-app.config['MAIL_USERNAME'] = 'nnm22cs007@nmamit.in'  # Replace with your email
-app.config['MAIL_PASSWORD'] = 'abhishashideepa@4'  # Replace with your email password
-app.config['MAIL_DEFAULT_SENDER'] = 'nnm22cs007@nmamit.in'  # Default sender email
+app.config['MAIL_USERNAME'] = 'email@gmail.com'  # Replace with your email
+app.config['MAIL_PASSWORD'] = 'password'  # Replace with your email password
+app.config['MAIL_DEFAULT_SENDER'] = 'senderemail'  # Default sender email
 
 mail = Mail(app)
 
